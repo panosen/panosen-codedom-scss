@@ -38,9 +38,7 @@ namespace Panosen.CodeDom.Scss
         /// <summary>
         /// 添加子节点
         /// </summary>
-        /// <param name="codeScss"></param>
-        /// <param name="name"></param>
-        public static CodeScss AddChild(this CodeScss codeScss, string name)
+        public static CodeScss AddChild(this CodeScss codeScss, string name, string summary = null)
         {
             if (codeScss.Children == null)
             {
@@ -49,6 +47,7 @@ namespace Panosen.CodeDom.Scss
 
             CodeScss scss = new CodeScss();
             scss.Name = name;
+            scss.Summary = summary;
 
             codeScss.Children.Add(scss);
 

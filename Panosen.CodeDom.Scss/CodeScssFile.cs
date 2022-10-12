@@ -12,6 +12,11 @@ namespace Panosen.CodeDom.Scss
     public class CodeScssFile
     {
         /// <summary>
+        /// 文件注释
+        /// </summary>
+        public string Summary { get; set; }
+
+        /// <summary>
         /// 变量
         /// </summary>
         public Dictionary<string, string> Variables { get; set; }
@@ -30,10 +35,6 @@ namespace Panosen.CodeDom.Scss
         /// <summary>
         /// 添加变量
         /// </summary>
-        /// <param name="codeFile"></param>
-        /// <param name="key"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
         public static CodeScssFile AddVariable(this CodeScssFile codeFile, string key, string value)
         {
             if (codeFile.Variables == null)
@@ -47,11 +48,9 @@ namespace Panosen.CodeDom.Scss
         }
 
         /// <summary>
-        /// add css
+        /// AddScss
         /// </summary>
-        /// <param name="codeFile"></param>
-        /// <param name="codeScss"></param>
-        public static CodeScssFile AddCodeScss(this CodeScssFile codeFile, CodeScss codeScss)
+        public static CodeScssFile AddScss(this CodeScssFile codeFile, CodeScss codeScss)
         {
             if (codeFile.CodeScssList == null)
             {
@@ -64,12 +63,9 @@ namespace Panosen.CodeDom.Scss
         }
 
         /// <summary>
-        /// add css
+        /// AddScss
         /// </summary>
-        /// <param name="codeFile"></param>
-        /// <param name="name"></param>
-        /// <param name="comment"></param>
-        public static CodeScss AddCodeScss(this CodeScssFile codeFile, string name = null, string comment = null)
+        public static CodeScss AddScss(this CodeScssFile codeFile, string name = null, string summary = null)
         {
             if (codeFile.CodeScssList == null)
             {
@@ -78,7 +74,7 @@ namespace Panosen.CodeDom.Scss
 
             CodeScss codeScss = new CodeScss();
             codeScss.Name = name;
-            codeScss.Comment = comment;
+            codeScss.Summary = summary;
 
             codeFile.CodeScssList.Add(codeScss);
 

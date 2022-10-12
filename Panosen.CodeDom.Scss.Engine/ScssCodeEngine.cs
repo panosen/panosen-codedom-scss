@@ -12,14 +12,20 @@ namespace Panosen.CodeDom.Scss.Engine
         /// <summary>
         /// 生成css文件
         /// </summary>
-        /// <param name="codeFile"></param>
-        /// <param name="codeWriter"></param>
-        /// <param name="options"></param>
         public void Generate(CodeScssFile codeFile, CodeWriter codeWriter, GenerationOptions options = null)
         {
             if (codeFile == null) { return; }
             if (codeWriter == null) { return; }
             options = options ?? new GenerationOptions();
+
+            if (!string.IsNullOrEmpty(codeFile.Summary))
+            {
+                codeWriter.Write(options.IndentString)
+                    .Write(Marks.SLASH).Write(Marks.STAR).WriteLine(Marks.Exclamation)
+                    .Write(Marks.WHITESPACE).Write(Marks.STAR).Write(Marks.WHITESPACE).WriteLine(codeFile.Summary)
+                    .Write(Marks.WHITESPACE).Write(Marks.STAR).WriteLine(Marks.SLASH);
+                codeWriter.WriteLine();
+            }
 
             if (codeFile.Variables != null && codeFile.Variables.Count > 0)
             {
@@ -33,9 +39,6 @@ namespace Panosen.CodeDom.Scss.Engine
         /// <summary>
         /// 生成变量
         /// </summary>
-        /// <param name="variables"></param>
-        /// <param name="codeWriter"></param>
-        /// <param name="options"></param>
         public void Generate(Dictionary<string, string> variables, CodeWriter codeWriter, GenerationOptions options = null)
         {
             if (variables == null || variables.Count == 0)
@@ -52,9 +55,6 @@ namespace Panosen.CodeDom.Scss.Engine
         /// <summary>
         /// 生成 css 列表
         /// </summary>
-        /// <param name="codeCssList"></param>
-        /// <param name="codeWriter"></param>
-        /// <param name="options"></param>
         public void Generate(List<CodeScss> codeCssList, CodeWriter codeWriter, GenerationOptions options = null)
         {
             if (codeCssList == null || codeCssList.Count == 0)
@@ -78,20 +78,20 @@ namespace Panosen.CodeDom.Scss.Engine
         }
 
         /// <summary>
-        /// 生成css
+        /// 生成scss
         /// </summary>
-        /// <param name="codeScss"></param>
-        /// <param name="codeWriter"></param>
-        /// <param name="options"></param>
         public void Generate(CodeScss codeScss, CodeWriter codeWriter, GenerationOptions options = null)
         {
             if (codeScss == null) { return; }
             if (codeWriter == null) { return; }
             options = options ?? new GenerationOptions();
 
-            if (!string.IsNullOrEmpty(codeScss.Comment))
+            if (!string.IsNullOrEmpty(codeScss.Summary))
             {
-                codeWriter.Write(options.IndentString).Write(Marks.SLASH).Write(Marks.SLASH).WriteLine(codeScss.Comment);
+                codeWriter.Write(options.IndentString)
+                    .Write(Marks.SLASH).Write(Marks.STAR).Write(Marks.WHITESPACE)
+                    .Write(codeScss.Summary)
+                    .Write(Marks.WHITESPACE).Write(Marks.STAR).WriteLine(Marks.SLASH);
             }
             codeWriter.Write(options.IndentString).Write(codeScss.Name).Write(Marks.WHITESPACE).WriteLine(Marks.LEFT_BRACE);
             options.PushIndent();

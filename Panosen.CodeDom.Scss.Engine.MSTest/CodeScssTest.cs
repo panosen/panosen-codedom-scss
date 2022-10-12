@@ -1,12 +1,13 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Panosen.CodeDom.Css;
 
 namespace Panosen.CodeDom.Scss.Engine.MSTest
 {
     [TestClass]
-    public class UnitTest1
+    public class CodeScssTest
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestMethod()
         {
             var codeScss = PrepareCodeScss();
 
@@ -22,21 +23,21 @@ namespace Panosen.CodeDom.Scss.Engine.MSTest
             CodeScss codeScss = new CodeScss();
 
             codeScss.Name = ".basic";
-            codeScss.Margin = "10px";
-            codeScss.BackgroundColor = "#f00";
+            codeScss.AddProperty("margin", "10px");
+            codeScss.AddProperty("background-color", "#f00");
 
             {
                 var scss = codeScss.AddChild("&.active");
-                scss.Margin = "5px";
+                scss.AddProperty("margin", "5px", "abc");
             }
 
             {
                 var scss = codeScss.AddChild("&.disable");
-                scss.Margin = "6px";
+                scss.AddProperty("margin", "6px");
 
                 {
-                    var scss2 = scss.AddChild("a");
-                    scss2.BackgroundColor = "#f00";
+                    var scss2 = scss.AddChild("a", "def");
+                    scss2.AddProperty("background-color", "#f00");
                 }
             }
 
@@ -50,12 +51,14 @@ namespace Panosen.CodeDom.Scss.Engine.MSTest
     margin: 10px;
 
     &.active {
+        /* abc */
         margin: 5px;
     }
 
     &.disable {
         margin: 6px;
 
+        /* def */
         a {
             background-color: #f00;
         }
